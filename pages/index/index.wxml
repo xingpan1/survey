@@ -1,0 +1,60 @@
+<view class="map_container">
+  <map class="map" id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="{{scale}}" show-location="true" controls='{{controls}}' markers="{{markers}}" polyline="{{polyline}}" enable-satellite='{{satellite}}' enable-3D='true' bindmarkertap="makertap"
+    bindregionchange='bindregionchange'></map>
+  <cover-view wx:if="{{!showEditor}}">
+    <picker bindchange="bindPickerChange" value="{{index}}" disabled="{{istrail}}" range-key="groupName" range="{{array}}">
+      <cover-view class="activeProject text-cut">
+        {{array[index].groupName}}
+      </cover-view>
+    </picker>
+  </cover-view>
+  <cover-image wx:if="{{!showEditor}}" id="1" bindtap='controls' src='/images/location.png' class='location'></cover-image>
+  <cover-view wx:if="{{!showEditor}}" id="7" class='dom' bindtap='controls'>
+    <cover-image wx:if="{{!showEditor}}" class='domImage' src='/images/dom.png'></cover-image>
+  </cover-view>
+  <cover-view wx:if="{{!showEditor}}" class='grid col-3 text-center' style='position:absolute;bottom:120rpx;width:510rpx;left:calc(50vw - 255rpx);'>
+    <cover-view class='getInfo' id="3" bindtap='controls'>记录</cover-view>
+    <cover-view class='getRecord bg-blue' id="2" bindtap='controls'>采集</cover-view>
+    <cover-view class="getTrail {{istrail?'text-red':''}}" id="4" bindtap='controls'>
+      {{istrail?'结束录入':'轨迹'}}
+    </cover-view>
+  </cover-view>
+  <cover-view wx:if="{{!showEditor}}" style='position:absolute;top:500rpx;right:20px;text-align:center;box-sizing:border-box'>
+    <cover-view id="5" bindtap='controls' style='border-bottom:1px solid #ddd;background:#fff;height:80rpx;padding-top:15rpx;box-sizing:border-box'>
+      <cover-image wx:if="{{!showEditor}}" class='domImage' src='/images/add.png'></cover-image>
+    </cover-view>
+    <cover-view id="6" bindtap='controls' style='width:80rpx;background:#fff;height:80rpx;padding-top:15rpx;box-sizing:border-box'>
+      <cover-image wx:if="{{!showEditor}}" class='domImage' src='/images/minus.png'></cover-image>
+    </cover-view>
+  </cover-view>
+  <cover-view wx:if="{{!showEditor}}" class='desc' style='color:{{descColor}}'>{{addressDesc}}</cover-view>
+  <cover-view class="cu-modal {{showModal?'show':''}}" wx:if='{{showModal}}'>
+    <cover-view class="login cu-dialog">
+      <cover-view class="padding-xl bg-white">
+        使用您的微信账号登录现状调研小程序
+      </cover-view>
+      <cover-view class="cu-bar bg-white justify-end" style='min-height:90rpx'>
+        <button open-type='getUserInfo' class="text-green" bindgetuserinfo="bindGetUserInfo" style='height:90rpx;width:100%;border-radius:0'>好的</button>
+      </cover-view>
+    </cover-view>
+  </cover-view>
+
+</view>
+<view class="cu-modal {{showEditor?'show':''}}">
+  <view class="cu-dialog" style='vertical-align:unset;'>
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">轨迹名称</view>
+    </view>
+    <view style='padding:25rpx'>
+      <view class="section">
+        <input value="{{trailTitle}}" maxlength="50" bindinput='editTitle' />
+      </view>
+    </view>
+    <view class="cu-bar bg-white justify-end">
+      <view class="action">
+        <button class="cu-btn line-green text-green" bindtap="delTrail">不保存</button>
+        <button class="cu-btn bg-green margin-left" bindtap="uploadTrail">保存</button>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,23 @@
+/* pages/task/index.wxss */
+video{
+  width:100%;
+  max-height:85px;
+}
+.audio {
+  width: 100% !important;
+  background: #0081ff;
+  padding-left: 30rpx;
+  color: #fff;
+  height: 100rpx;
+  border-radius: 50rpx;
+  line-height: 100rpx;
+  position: relative;
+}
+
+.audio text.lg{
+  font-size: 50rpx;
+}
+.audio view{
+  display: inline-block;
+  position: absolute
+}

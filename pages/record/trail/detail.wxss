@@ -1,0 +1,51 @@
+/* pages/record/detail/detail.wxss */
+
+.container {
+  height: 100vh;
+  overflow: scroll;
+}
+
+.map {
+  width: 100%;
+  height:calc(100vh - 250rpx);
+}
+
+.content {
+  height:250rpx;
+  overflow: scroll;
+}
+
+.nav .cu-item {
+  margin: 0;
+  border-bottom: 4rpx solid #ddd;
+}
+
+.cu-form-group {
+  align-items: unset;
+  padding-top: 20rpx;
+}
+
+#myVideo {
+  width: 100%;
+  max-height: 85px;
+}
+
+.upload {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 3rpx;
+  background: #fff;
+}
+
+.upload button {
+  width: 100%;
+}
+
+.cu-modal {
+  display: none;
+}
+
+.cu-modal.show {
+  display: block;
+}

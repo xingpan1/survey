@@ -1,0 +1,12 @@
+/* pages/group/create/create.wxss */
+
+.cu-form-group .title {
+  min-width: calc(4em + 30rpx);
+}
+.message {
+  position: fixed;
+  top: 30rpx;
+  text-align: center;
+  width: 100%;
+  z-index: 10001;
+}

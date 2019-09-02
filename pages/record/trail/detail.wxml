@@ -1,0 +1,36 @@
+<view class='container'>
+  <map class="map" id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="{{16}}" polyline="{{polyline}}"></map>
+  <view class='content'>
+    <view class="cu-bar bg-white solid-bottom" style='min-height:70rpx' bindtap='recordDetail'>
+      <view class="grid col-1 action" style='padding:10rpx 5rpx'>
+        <view class='text-sm text-gray text-cut'>名称：{{item.name}}<text class="cuIcon-edit text-blue" bindtap="editTitle" wx:if='{{canWrite}}'></text></view>
+        <view class='text-sm text-gray'>作者：{{item.nickName}}</view>
+        <view class='text-sm text-gray'>起点：{{item.startAddress}}</view>
+        <view class='text-sm text-gray'>终点：{{item.endAddress}}</view>
+        <view class='text-sm text-gray'>时长：{{item.timeSpan}}</view>
+        <view class='text-sm text-gray'>时间：{{item.createTime}}</view>
+      </view>
+    </view>
+  </view>
+  <view class="cu-modal {{showEditor?'show':''}}">
+  <view class="cu-dialog" style="vertical-align:unset">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">轨迹名称</view>
+      <view class="action" bindtap="hideEditor">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view style='padding:25rpx'>
+      <view class="section">
+        <input value="{{name}}" maxlength="20" bindinput='textareaAInput' />
+     </view>
+    </view>
+    <view class="cu-bar bg-white justify-end">
+      <view class="action">
+        <button class="cu-btn line-green text-green" bindtap="hideEditor">取消</button>
+        <button class="cu-btn bg-green margin-left" bindtap="confirmEdit">确定</button>
+      </view>
+    </view>
+  </view>
+</view>
+</view>

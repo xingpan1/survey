@@ -1,0 +1,93 @@
+<view class='container'>
+  <map class="map" id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="{{16}}" markers="{{markers}}" polyline="{{polyline}}"></map>
+  <view class='content'>
+    <view class="cu-bar bg-white solid-bottom" style='min-height:70rpx' bindtap='recordDetail'>
+      <view class="grid col-1 action" style='padding:10rpx 5rpx'>
+        <view class='text-sm text-gray text-cut'>名称：{{item.recordName}}</view>
+        <view class='text-sm text-gray'>作者：{{item.nickName}}</view>
+        <view class='text-sm text-gray'>坐标：北纬{{latitude}},东经{{longitude}}</view>
+        <view class='text-sm text-gray'>时间：{{item.createTime}}</view>
+        <view class='text-sm text-gray'>描述：{{item.describtion===''?'暂无相关描述':item.describtion}}
+          <text class="cuIcon-edit text-blue" bindtap="editDesc" wx:if='{{canWrite}}'></text>
+        </view>
+      </view>
+    </view>
+
+    <scroll-view scroll-x class="bg-white nav">
+      <view class="flex text-center">
+        <view class="cu-item flex-sub {{index==TabCur?'text-orange cur':''}}" wx:for="{{3}}" wx:key bindtap="tabSelect" data-id="{{index}}">
+          <text class="cuIcon-{{icon[index]}}" style='margin-right:10rpx'></text>{{tab[index]}}
+        </view>
+      </view>
+    </scroll-view>
+
+    <view class="cu-form-group" wx:if='{{TabCur===0&&imgList.length!==0}}'>
+      <view class="grid col-4 grid-square flex-sub">
+        <view class="bg-img" wx:for="{{imgList}}" wx:key="{{index}}" bindtap="ViewImage" data-url="{{imgList1[index]}}">
+          <image src='{{imgList[index]}}' mode='aspectFill'></image>
+          <!-- <view class="cu-tag bg-red" catchtap="DelImg" data-index="{{index}}">
+            <text class="cuIcon-close"></text>
+          </view> -->
+        </view>
+      </view>
+    </view>
+
+    <view class="cu-form-group" wx:if='{{TabCur===1&&video.length!==0}}'>
+      <view class="grid col-4 grid-square flex-sub">
+        <view class="bg-img" wx:for="{{video}}" wx:key="{{index}}">
+          <video id="myVideo{{index}}" src="{{video[index]}}" bindfullscreenchange="screenChange" show-fullscreen-btn='{{true}}' data-index='{{index}}' bindplay='onVideoPlay' autoplay="{{false}}" object-fit='fill'></video>
+        </view>
+      </view>
+    </view>
+
+    <view class="cu-form-group" style='padding-bottom:20rpx;display:block' wx:if='{{TabCur===2&&voice.length!==0}}'>
+      <view class="grid col-{{voice.length+1}} margin-bottom" wx:key="{{index}}" wx:for="{{voice}}">
+        <view class="audio">
+          <text class="cuIcon-playfill lg" wx:if="{{!isPlay[index]}}"  data-index="{{index}}" bindtap="onVoicePlay"></text>
+          <text class="cuIcon-stop lg" wx:if="{{isPlay[index]}}"   data-index="{{index}}" bindtap="onVoicePause"></text>
+          <view>{{name[index]}}</view>
+          <view style="right:30rpx">
+            {{voiceProgress[index]}}/{{voiceLength[index]}}
+          </view>
+        </view>
+      </view>
+    </view>
+
+  </view>
+  <view class="flex flex-direction" class="upload" bindtap="addUpload" wx:if='{{canWrite}}'>
+    <button class="cu-btn bg-blue lg">上传</button>
+  </view>
+</view>
+<view class="cu-modal {{showEditor?'show':''}}">
+  <view class="cu-dialog" style="vertical-align:unset">
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">记录描述</view>
+      <view class="action" bindtap="hideEditor">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view style='padding:25rpx'>
+      <view class="section">
+        <textarea style="width:100%" maxlength="100" bindinput="textareaAInput" value="{{textValue}}" placeholder="请输入记录描述信息"></textarea>
+      </view>
+    </view>
+    <view class="cu-bar bg-white justify-end">
+      <view class="action">
+        <button class="cu-btn line-green text-green" bindtap="hideEditor">取消</button>
+        <button class="cu-btn bg-green margin-left" bindtap="confirmEdit">确定</button>
+      </view>
+    </view>
+  </view>
+</view>
+<view class='cu-load load-modal' wx:if="{{loadModal}}">
+  <text class="cuIcon-voice" style='font-size:35px'></text>
+
+  <view class='gray-text' wx:if='{{isPause}}'>暂停中</view>
+  <view class='gray-text' wx:if='{{!isPause}}'>{{minute}}:{{second}}</view>
+</view>
+<view class='load-modal' wx:if="{{loadModal}}" style="position:fixed;bottom:60px;text-align:center;width:200px;left:calc(50vw - 100px);z-index:10000;background:#000">
+  <text class="cuIcon-delete" bindtap='delVoice' style='font-size:35px;margin:0 15px;color:#fff'></text>
+  <text class="cuIcon-stop" wx:if='{{!isPause}}' bindtap='pauseVoice' style='font-size:35px;margin:0 15px;color:#fff'></text>
+  <text class="cuIcon-playfill" wx:if='{{isPause}}' bindtap='resumeVoice' style='font-size:35px;margin:0 15px;color:#fff'></text>
+  <text class="cuIcon-ellipse" bindtap='stopVoice' style='font-size:35px;margin:0 15px;color:#fff'></text>
+</view>

@@ -1,0 +1,18 @@
+/* pages/record/record.wxss */
+page{
+  background: #eeeeee
+}
+.margin-top {
+  margin-top: 15rpx;
+  border-top: 1px solid #ddd;
+}
+
+.nav .cu-item {
+  margin: 0;
+  border-bottom: 1rpx solid #ddd;
+}
+
+.grid.col-1>view {
+  width: calc(100vw - 80rpx);
+}
+

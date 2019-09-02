@@ -1,0 +1,83 @@
+<scroll-view scroll-x class="bg-white nav">
+  <view class="flex text-center">
+    <view class="cu-item flex-sub {{index==TabCur?'text-orange cur':''}}" wx:for="{{tab}}" wx:key bindtap="tabSelect" data-id="{{index}}">
+      {{tab[index]}}
+    </view>
+  </view>
+</scroll-view>
+<view style="position:relative" wx:for='{{recordShowList}}' wx:key='id' wx:if='{{TabCur===0}}'  data-id='{{item.id}}' bindtap='recordDetail'>
+  <view>
+    <view class="cu-list grid col-4 margin-top" style="padding-right:20rpx">
+      <view class="cu-item" style='padding:0;padding-bottom:20rpx'>
+        <view class="cuIcon-picfill text-yellow">
+          <view class="cu-tag badge" wx:if="{{item.imgNum!=0}}">
+            <block>{{item.imgNum>99?"99+":item.imgNum}}</block>
+          </view>
+        </view>
+        <text style='margin-top:0'>图像</text>
+      </view>
+      <view class="cu-item" style='padding:0;padding-bottom:20rpx'>
+        <view class="cuIcon-text {{item.textNum!=0?'text-red':'text-gray'}}">
+        </view>
+        <text style='margin-top:0'>文本</text>
+      </view>
+      <view class="cu-item" style='padding:0;padding-bottom:20rpx'>
+        <view class="cuIcon-recordfill text-orange">
+          <view class="cu-tag badge" wx:if="{{item.videoNum!=0}}">
+            <block>{{item.videoNum>99?"99+":item.videoNum}}</block>
+          </view>
+        </view>
+        <text style='margin-top:0'>录像</text>
+      </view>
+      <view class="cu-item" style='padding:0;padding-bottom:20rpx'>
+        <view class="cuIcon-voicefill text-olive">
+          <view class="cu-tag badge" wx:if="{{item.voiceNum!=0}}">
+            <block>{{item.voiceNum>99?"99+":item.voiceNum}}</block>
+          </view>
+        </view>
+        <text style='margin-top:0'>录音</text>
+      </view>
+    </view>
+    <view class="cu-bar bg-white solid-bottom" style='min-height:70rpx'>
+      <view class="grid col-1 action arrow" style='padding:10rpx 0'>
+        <view class='text-sm text-gray'>名称：{{item.recordName}}</view>
+        <view class='text-sm text-gray'>地点：北纬{{item.coordinate.latitude}},东经{{item.coordinate.longitude}}</view>
+        <view class='text-sm text-gray'>作者：{{item.nickName}}</view>
+        <view class='text-sm text-gray'>时间：{{item.createTime}}</view>
+      </view>
+      <view class="action">
+        <text class="cuIcon-right text-gray"></text>
+      </view>
+    </view>
+    <view class="cu-tag bg-write" catchtap="DelRecord" wx:if="{{item.unionId===unionId}}" data-index='{{index}}' data-id="{{item.id}}" style="position:absolute;top:0;right:0;padding:0 13rpx;border:1px solid #ddd">
+      <text class="cuIcon-deletefill"></text>
+    </view>
+  </view>
+
+</view>
+<view wx:for='{{trailList}}' wx:key='id' wx:if='{{TabCur===1}}' style="position:relative">
+  <view class="cu-bar bg-white solid-bottom margin-top" style='min-height:70rpx' data-id='{{item.id}}' bindtap='trailDetail'>
+    <view class="grid col-1 action arrow" style='padding:10rpx 0'>
+      <view class='text-sm text-gray text-cut'>名称：{{item.name}}</view>    
+      <view class='text-sm text-gray'>作者：{{item.nickName}}</view>
+      <view class='text-sm text-gray'>起点：{{item.startAddress}}</view>
+      <view class='text-sm text-gray'>终点：{{item.endAddress}}</view>
+      <view class='text-sm text-gray'>时长：{{item.timeSpan}}</view>
+      <view class='text-sm text-gray'>时间：{{item.trailDetails[0].createTime}}</view>
+    </view>
+    <view class="action">
+      <text class="cuIcon-right text-gray"></text>
+    </view>
+  </view>
+  <view class="cu-tag bg-write" catchtap="DelTrail"  wx:if="{{item.unionId===unionId}}"  data-index='{{index}}' data-id="{{item.id}}" style="position:absolute;top:0;right:0;padding:0 13rpx;border:1px solid #ddd">
+    <text class="cuIcon-deletefill"></text>
+  </view>
+</view>
+<view style="text-align:center" wx:if='{{TabCur===1&&trailList.length===0}}'>
+  <image style="width:100vw;height:320rpx;margin-top:200rpx" src="../../images/noData.png"></image>
+  <text class="text-gray">暂无相关数据</text>
+</view>
+<view style="text-align:center" wx:if='{{TabCur===0&&recordList.length===0}}'>
+  <image style="width:100vw;height:320rpx;margin-top:200rpx" src="../../images/noData.png"></image>
+  <text class="text-gray">暂无相关数据</text>
+</view>

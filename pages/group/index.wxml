@@ -1,0 +1,73 @@
+<scroll-view scroll-x class="bg-white nav">
+  <view class="flex text-center">
+    <view class="cu-item flex-sub {{index==TabCur?'text-orange cur':''}}" wx:for="{{tab}}" wx:key bindtap="tabSelect" data-id="{{index}}">
+      {{tab[index]}}
+    </view>
+  </view>
+</scroll-view>
+<view class="cu-bar search bg-white" wx:if='{{TabCur===2}}'>
+  <view class="search-form round" style='margin:0 10px 0 5px'>
+    <text class="cuIcon-search"></text>
+    <input type="text" confirm-type='search' bindconfirm='groupSearch'  placeholder="搜索团队" bindinput="searchText" confirm-type="search"></input>
+  </view>
+  <!-- <view class="action">
+    <button class="cu-btn bg-blue shadow-blur round"  bindtap="groupSearch">搜索</button>
+  </view> -->
+</view>
+<view class="cu-list menu-avatar">
+  <view class="cu-item cur" bindtap='createGroup' wx:if='{{TabCur===0}}'>
+    <view class="cu-avatar radius lg cuIcon-add">
+    </view>
+    <view class="content" style='line-height:1.4'>
+      <text>创建团队</text>
+    </view>
+    <view class="action">
+      <text class="cuIcon-right text-gray"></text>
+    </view>
+  </view>
+  <view class="cu-item cur" wx:for='{{showList[TabCur]}}' wx:key="id"  data-id='{{item.id}}' bindtap="{{TabCur!==2?'groupDetail':''}}">
+    <view class="group cu-avatar radius lg" >
+    </view>
+    <view class="content" style='line-height:1.4'>
+      <view>
+        <text class="cuIcon-lock text-red" wx:if="{{item.password!==''}}"></text>
+        <text class="text-cut">{{item.groupName}}</text>
+        <text class="">({{item.id}})</text>
+        <view class="cu-tag round bg-orange sm" style='height:32rpx'>{{item.count}}人</view>
+      </view>
+      <view class="text-gray text-sm">
+        <text class="text-cut">群主：{{item.userName}}\n创建日期：{{item.createTime}}</text>
+      </view>
+    </view>
+    <view class="action" wx:if='{{TabCur!==2}}'>
+      <text class="cuIcon-right text-gray"></text>
+    </view>
+    <view class="action" data-id='{{item.id}}' data-password='{{item.password}}' bindtap='joinGroup' wx:if='{{TabCur===2}}'>
+      <text class="cuIcon-add text-gray"></text>
+    </view>
+  </view>
+</view>
+<view class="cu-modal {{showModal?'show':''}}">
+  <view class="cu-dialog" style='vertical-align:unset;'>
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">输入密码</view>
+      <view class="action" bindtap="hideModal">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view style='padding:25rpx'>
+      <view class="section">
+        <input bindinput='inputPassword' value='{{value}}' />
+      </view>
+    </view>
+    <view class="cu-bar bg-white justify-end">
+      <view class="action">
+        <button class="cu-btn line-green text-green" bindtap="hideModal">取消</button>
+        <button class="cu-btn bg-green margin-left" bindtap="joinConfirm">确定</button>
+      </view>
+    </view>
+  </view>
+</view>
+<view class='message' wx:if='{{showMessage}}'>
+  <button class="bg-white cu-btn margin-sm basis-sm shadow" style="animation-delay: 3s;"><text class='cuIcon-warn text-red'></text>{{modalText}}</button>
+</view>

@@ -1,0 +1,63 @@
+<view class='weui-panel'>
+  <view class='weui-flex'>
+    <view style='padding-left:5px;'>
+      <text class="cuIcon-location" style='font-size:22px;line-height:2'></text>
+    </view>
+    <view style="font-size:16px;line-height:25px;padding-top:5px;" class='weui-flex__item'>
+      <text class='weui-media-box__desc' style='-webkit-line-clamp:1'>{{item.recordName}}</text>
+      <text style='font-size:12px'>北纬{{latitude}},东经{{longitude}}</text>
+    </view>
+  </view>
+</view>
+<view class="cu-form-group margin-top" wx:if="{{item.describtion!==''}}">
+  <view style="padding:10rpx 0;">{{item.describtion}}</view>
+</view>
+
+<view class="cu-bar bg-white margin-top" wx:if='{{voice.length!==0}}'>
+  <view class='action'>
+    录音记录
+  </view>
+</view>
+<view class="cu-form-group" style='padding-bottom:20rpx;display:block' wx:if='{{voice.length!==0}}'>
+  <view class="grid col-{{voice.length+1}} margin-bottom" wx:key="{{index}}" wx:for="{{voice}}">
+    <view class="audio">
+          <text class="cuIcon-playfill lg" wx:if="{{!isPlay[index]}}"  data-index="{{index}}" bindtap="onVoicePlay"></text>
+          <text class="cuIcon-stop lg" wx:if="{{isPlay[index]}}"   data-index="{{index}}" bindtap="onVoicePause"></text>
+          <view>未命名{{1+index}}</view>
+          <view style="right:30rpx">
+            {{voiceProgress[index]}}/{{voiceLength[index]}}
+          </view>
+        </view>
+  </view>
+</view>
+
+
+<view class="cu-bar bg-white margin-top" wx:if='{{imgList.length!==0}}'>
+  <view class="action">
+    图片信息
+  </view>
+</view>
+<view class="cu-form-group" wx:if='{{imgList.length!==0}}'>
+  <view class="grid col-4 grid-square flex-sub">
+    <view class="bg-img" wx:for="{{imgList}}" wx:key="{{index}}" bindtap="ViewImage" data-url="{{imgList[index]}}">
+      <image src='{{imgList[index]}}' mode='aspectFill'></image>
+    </view>
+  </view>
+</view>
+<view class="cu-bar bg-white margin-top" wx:if="{{video.length!==0}}">
+  <view class="action">
+    视频信息
+  </view>
+</view>
+<view class="cu-form-group" wx:if="{{video.length!==0}}">
+  <view class="grid col-4 grid-square flex-sub">
+    <view class="bg-img" wx:for="{{video}}" wx:key="{{index}}" wx:if="{{video.length!==0}}">
+      <video id="myVideo+{{index}}" data-index='{{index}}'  bindplay='onVideoPlay' src="{{video[index]}}" bindfullscreenchange="screenChange" show-fullscreen-btn='{{true}}' object-fit='fill' controls></video>
+    </view>
+  </view>
+</view>
+
+
+<view class="padding flex flex-direction">
+  <button class="cu-btn bg-blue margin-tb-sm lg" bindtap='formSubmit'>上传</button>
+</view>

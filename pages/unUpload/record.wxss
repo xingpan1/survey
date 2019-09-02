@@ -1,0 +1,13 @@
+/* pages/record/record.wxss */
+.margin-top{
+  margin-top:15rpx;
+  border-top:1px solid #ddd;
+}
+.nav .cu-item{
+  margin: 0;
+  border-bottom: 1rpx solid #ddd
+}
+page{
+  height: 100vh;
+  background: #eeeeee
+}

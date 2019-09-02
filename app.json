@@ -1,0 +1,53 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/userInfo/index",
+    "pages/group/index",
+    "pages/group/detail/detail",
+    "pages/group/create/create",
+    "pages/logs/logs",
+    "pages/editor/index",
+    "pages/record/record",
+    "pages/record/detail/detail",
+    "pages/record/trail/detail",
+    "pages/unUpload/record",
+    "pages/unUpload/editor/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "现状调研"
+  },
+  "tabBar": {
+    "selectedColor": "#3285ff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home1.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/group/index",
+        "iconPath": "images/task.png",
+        "selectedIconPath": "images/task1.png",
+        "text": "协作"
+      },
+      {
+        "pagePath": "pages/userInfo/index",
+        "iconPath": "images/people.png",
+        "selectedIconPath": "images/peoplefill.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true,
+  "sitemapLocation": "sitemap.json"
+}

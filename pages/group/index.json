@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+  },
+  "navigationBarTitleText": "团队协作",
+  "enablePullDownRefresh":true,
+  "onReachBottomDistance":50
+}

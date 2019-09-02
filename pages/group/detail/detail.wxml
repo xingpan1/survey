@@ -1,0 +1,59 @@
+<view class="cu-list grid col-5 {{gridBorder?'':'no-border'}}">
+  <view class="cu-item" wx:for="{{showList}}" wx:key='{{item.id}}' style='padding-bottom:0'>
+    <view class="cu-avatar xl radius" style="background-image:url({{item.avatar}});margin:0 auto">
+      <view class="bg-red .deluser" wx:if='{{showDel}}' catchtap="delUser" data-id='{{item.unionId}}' data-index="{{index}}">
+        <text class="cuIcon-close text-white" style='margin:0;font-size:24rpx;color:#fff'></text>
+      </view>
+    </view>
+    <text class='text-cut' style='margin:10rpx auto;width:128rpx;height:40rpx;font-size:24rpx;line-height:40rpx'>{{item.nickName}}</text>
+  </view>
+  <view class="cu-item" bindtap='canDel' style='padding-bottom:0' wx:if='{{isManage}}'>
+    <view wx:if='{{!showDel}}' class="cu-avatar  cuIcon-move  xl radius" style="margin:0 auto;width:128rpx;line-height:128rpx"></view>
+    <view wx:if='{{showDel}}' class="cu-avatar  cuIcon-close  xl radius" style="margin:0 auto;width:128rpx;line-height:128rpx"></view>
+  </view>
+  <view wx:if='{{showMore&&isShowMore}}' bindtap="showMore"   class="cuIcon-unfold text-gray" style="width:100%;">查看更多成员</view>
+  <view wx:if='{{showMore&&!isShowMore}}' bindtap="hideMore"  class="cuIcon-fold text-gray" style="width:100%;">收起团队成员</view>
+</view>
+
+<view class="cu-list menu {{menuBorder?'sm-border':''}} {{menuCard?'card-menu margin-top':''}}">
+  <view class="cu-item">
+    <view class="content" style="min-width:180rpx">
+      <text class="cuIcon-circlefill text-grey"></text>
+      <text class="text-grey">团队名称</text>
+    </view>
+    <view class="action text-cut" style="width:calc(100vw - 250rpx);text-align:right">
+      <text class="text-grey text-sm">{{groupDetail.groupName}}</text>
+    </view>
+  </view>
+  <view class="cu-item">
+    <view class="content">
+      <text class="cuIcon-explorefill text-green"></text>
+      <text class="text-grey">团队ID</text>
+    </view>
+    <view class="action">
+      <text class="text-grey text-sm">{{groupDetail.id}}</text>
+    </view>
+  </view>
+  <view class="cu-item">
+    <view class="content">
+      <text class="cuIcon-peoplefill text-grey"></text>
+      <text class="text-grey">团队管理员</text>
+    </view>
+    <view class="action">
+      <text class="text-grey text-sm">{{groupDetail.userName}}</text>
+    </view>
+  </view>
+  <view class="cu-item">
+    <view class="content">
+      <text class="cuIcon-lock text-grey"></text>
+      <text class="text-grey">团队密码</text>
+    </view>
+    <view class="action">
+      <text class="text-grey text-sm">{{groupDetail.password==''?'未设置':groupDetail.password}}</text>
+    </view>
+  </view>
+</view>
+
+<view class="padding flex flex-direction margin-top">
+  <button class="cu-btn bg-red margin-tb-sm lg" bindtap="exitGroup">退出团队</button>
+</view>

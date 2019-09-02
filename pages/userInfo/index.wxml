@@ -1,0 +1,38 @@
+<!--pages/all/index.wxml-->
+<view>
+  <view class="cu-avatar xl round margin-left" style="background-image:url('{{avatar}}');margin-left:calc(50vw - 64rpx);margin-top:50rpx;"></view>
+  <view style='text-align:center;margin:20rpx auto'>
+    <text>{{nickName}}</text>
+  </view>
+</view>
+
+
+
+<view class="cu-list menu margin-top">
+  <view class="cu-item arrow" style='padding-right:90rpx' bindtap="getList">
+    <view class="content">
+      <text class="cuIcon-explorefill text-green"></text>
+      <text class="text-grey">我的采集</text>
+    </view>
+    <view class="action">
+    </view>
+  </view>
+  <view class="cu-item">
+    <view class="content">
+      <text class="cuIcon-wifi text-grey"></text>
+      <text class="text-grey">仅在Wi-Fi下上传</text>
+    </view>
+    <view class="action">
+      <switch name='hasPassword' checked='{{wifi}}' bindchange='setUpload' style='position:unset'></switch>
+    </view>
+  </view>
+  <view class="cu-item arrow" bindtap="getUnupload">
+    <view class="content">
+      <text class="cuIcon-info text-red"></text>
+      <text class="text-grey">未上传记录</text>
+    </view>
+    <view class="action">
+      <text class="text-grey text-sm">前往查看</text>
+    </view>
+  </view>
+</view>

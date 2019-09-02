@@ -1,0 +1,118 @@
+<view class='weui-panel'>
+  <view class='weui-flex'>
+    <view style='padding-left:5px;'>
+      <text class="cuIcon-location" style='font-size:22px;line-height:2'></text>
+    </view>
+    <view style="font-size:16px;line-height:25px;padding-top:5px;" class='weui-flex__item'>
+      <text class='weui-media-box__desc' style='-webkit-line-clamp:1'>{{addressDesc}}</text>
+      <text style='font-size:12px'>北纬{{latitude}},东经{{longitude}}</text>
+    </view>
+    <view style='padding-right:5px;' bindtap='showEditor'>
+      <text class="cuIcon-edit" style='font-size:22px;line-height:2'></text>
+    </view>
+  </view>
+</view>
+<view class="cu-modal {{showEditor?'show':''}}">
+  <view class="cu-dialog" style='vertical-align:unset;'>
+    <view class="cu-bar bg-white justify-end">
+      <view class="content">地址详情</view>
+      <view class="action" bindtap="hideEditor">
+        <text class="cuIcon-close text-red"></text>
+      </view>
+    </view>
+    <view style='padding:25rpx'>
+      <view class="section">
+        <input value="{{addressDesc}}" bindinput='editTitle' />
+      </view>
+    </view>
+    <view class="cu-bar bg-white justify-end">
+      <view class="action">
+        <button class="cu-btn line-green text-green" bindtap="hideEditor">取消</button>
+        <button class="cu-btn bg-green margin-left" bindtap="confirmEdit">确定</button>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="cu-form-group margin-top" wx:if='{{isFullscreen}}'>
+  <textarea maxlength="100" auto-height  bindinput="textareaAInput" placeholder="请输入文字描述"></textarea>
+</view>
+<view class="cu-bar bg-white margin-top">
+  <view class='action'>
+    添加录音<text class="text-sm">(单个录音最大时长60s)</text>
+  </view>
+  <view class='action'  wx:if='{{voice.length<10}}'>
+    <button class='cu-btn bg-blue shadow'  bindtap='startVoice'>
+      <text class="cuIcon-voice" style='font-size:22px'></text>
+    </button>
+  </view>
+</view>
+<view class="cu-form-group" style='padding-bottom:20rpx;display:block' wx:if='{{voice.length!==0}}'>
+    <view class="grid col-{{voice.length+1}} margin-bottom" wx:key="{{index}}" wx:for="{{voice}}">
+        <view class="audio">
+          <text class="cuIcon-playfill lg" wx:if="{{!isPlay[index]}}"  data-index="{{index}}" bindtap="onVoicePlay"></text>
+          <text class="cuIcon-stop lg" wx:if="{{isPlay[index]}}"   data-index="{{index}}" bindtap="onVoicePause"></text>
+          <view>{{name[index]}}</view>
+          <view style="right:80rpx">
+            {{voiceProgress[index]}}/{{voiceLength[index]}}          
+          </view>
+          <text style="float:right;margin-right:20rpx" class="cuIcon-delete lg"  data-index="{{index}}" bindtap="voiceDel"></text>
+        </view>
+      </view>
+  </view>
+<view class='cu-load load-modal' wx:if="{{loadModal}}">
+  <!-- <view class='cuIcon-emojifill text-orange'></view> -->
+  <text class="cuIcon-voice" style='font-size:35px'></text>
+
+  <view class='gray-text' wx:if='{{isPause}}'>暂停中</view>
+  <view class='gray-text' wx:if='{{!isPause}}'>{{minute}}:{{second}}</view>
+</view>
+<view class='load-modal' wx:if="{{loadModal}}" style="position:fixed;bottom:60px;text-align:center;width:200px;left:calc(50vw - 100px);z-index:10000;background:#000">
+  <text class="cuIcon-delete" bindtap='delVoice' style='font-size:35px;margin:0 15px;color:#fff'></text>
+  <text class="cuIcon-stop" wx:if='{{!isPause}}' bindtap='pauseVoice' style='font-size:35px;margin:0 15px;color:#fff'></text>
+  <text class="cuIcon-playfill" wx:if='{{isPause}}' bindtap='resumeVoice' style='font-size:35px;margin:0 15px;color:#fff'></text>
+  <text class="cuIcon-ellipse" bindtap='stopVoice' style='font-size:35px;margin:0 15px;color:#fff'></text>
+</view>
+<view class="cu-bar bg-white margin-top">
+  <view class="action">
+    添加图片
+  </view>
+</view>
+<view class="cu-form-group">
+  <view class="grid col-4 grid-square flex-sub">
+    <view class="bg-img" wx:for="{{imgList}}" wx:key="{{index}}" bindtap="ViewImage" data-url="{{imgList[index]}}">
+      <image src='{{imgList[index]}}' mode='aspectFill'></image>
+      <view class="cu-tag bg-red" catchtap="DelImg" data-index="{{index}}">
+        <text class="cuIcon-close"></text>
+      </view>
+    </view>
+    <view class="solids" bindtap="chooseImage">
+      <text class="cuIcon-cameraadd"></text>
+    </view>
+  </view>
+</view>
+<view class="cu-bar bg-white margin-top">
+  <view class="action">
+    添加视频<text class="text-sm">(单个视频最大为20M)</text>
+  </view>
+  <!-- <view class="action">
+    {{imgList.length}}/1
+  </view> -->
+</view>
+<view class="cu-form-group">
+  <view class="grid col-4 grid-square flex-sub">
+    <view class="bg-img" wx:for="{{video}}" wx:key="{{index}}" wx:if="{{video.length!==0}}">
+      <video id="myVideo+{{index}}" data-index="{{index}}" src="{{video[index]}}" bindfullscreenchange="screenChange" show-fullscreen-btn='{{true}}' object-fit='fill'  bindplay='onVideoPlay' autoplay="{{false}}"></video>
+      <view class="cu-tag bg-red" catchtap="delVideo" data-index="{{index}}">
+        <text class="cuIcon-close"></text>
+      </view>
+    </view>
+    <view class="solids" bindtap="chooseVideo" wx:if='{{video.length<10}}'>
+      <text class="cuIcon-record"></text>
+    </view>
+  </view>
+</view>
+
+
+<view class="padding flex flex-direction">
+  <button class="cu-btn bg-blue margin-tb-sm lg" bindtap='formSubmit'>提交</button>
+</view>
